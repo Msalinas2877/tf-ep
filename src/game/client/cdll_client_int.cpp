@@ -1156,6 +1156,9 @@ void CHLClient::PostInit()
 		}
 	}
 #endif
+#ifdef TF_EP_CLIENT
+	g_pVGuiLocalize->AddFile("resource/tf_english.txt", "GAME");
+#endif
 }
 
 //-----------------------------------------------------------------------------
