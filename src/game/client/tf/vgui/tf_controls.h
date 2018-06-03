@@ -27,13 +27,13 @@
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-class CTFButton : public vgui::Button
+class CExButton : public vgui::Button
 {
 public:
-	DECLARE_CLASS_SIMPLE( CTFButton, vgui::Button );
+	DECLARE_CLASS_SIMPLE( CExButton, vgui::Button );
 
-	CTFButton( vgui::Panel *parent, const char *name, const char *text );
-	CTFButton( vgui::Panel *parent, const char *name, const wchar_t *wszText );
+	CExButton( vgui::Panel *parent, const char *name, const char *text );
+	CExButton( vgui::Panel *parent, const char *name, const wchar_t *wszText );
 
 	virtual void ApplySettings( KeyValues *inResourceData );
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -46,13 +46,13 @@ private:
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-class CTFLabel : public vgui::Label
+class CExLabel : public vgui::Label
 {
 public:
-	DECLARE_CLASS_SIMPLE( CTFLabel, vgui::Label );
+	DECLARE_CLASS_SIMPLE( CExLabel, vgui::Label );
 
-	CTFLabel( vgui::Panel *parent, const char *panelName, const char *text );
-	CTFLabel( vgui::Panel *parent, const char *panelName, const wchar_t *wszText );
+	CExLabel( vgui::Panel *parent, const char *panelName, const char *text );
+	CExLabel( vgui::Panel *parent, const char *panelName, const wchar_t *wszText );
 
 	virtual void ApplySettings( KeyValues *inResourceData );
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -61,17 +61,17 @@ private:
 	char		m_szColor[64];
 };
 
-typedef CTFLabel CExLabel;
+typedef CExLabel CExLabel;
 
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-class CTFRichText : public vgui::RichText
+class CExRichText : public vgui::RichText
 {
 public:
-	DECLARE_CLASS_SIMPLE( CTFRichText, vgui::RichText );
+	DECLARE_CLASS_SIMPLE( CExRichText, vgui::RichText );
 
-	CTFRichText( vgui::Panel *parent, const char *panelName );
+	CExRichText( vgui::Panel *parent, const char *panelName );
 
 	virtual void ApplySettings( KeyValues *inResourceData );
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );

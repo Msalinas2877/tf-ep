@@ -60,15 +60,15 @@ private:
 
 protected:
 	IViewPort			*m_pViewPort;
-	CTFLabel			*m_pTitle;
-	CTFRichText			*m_pMapInfo;
+	CExLabel			*m_pTitle;
+	CExRichText			*m_pMapInfo;
 
 #ifdef _X360
 	CTFFooter			*m_pFooter;
 #else
-	CTFButton			*m_pContinue;
-	CTFButton			*m_pBack;
-	CTFButton			*m_pIntro;
+	CExButton			*m_pContinue;
+	CExButton			*m_pBack;
+	CExButton			*m_pIntro;
 #endif
 
 	vgui::ImagePanel	*m_pMapImage;

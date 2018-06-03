@@ -46,12 +46,12 @@ private:
 	int								m_nAmmo;
 	int								m_nAmmo2;
 
-	CTFLabel						*m_pInClip;
-	CTFLabel						*m_pInClipShadow;
-	CTFLabel						*m_pInReserve;
-	CTFLabel						*m_pInReserveShadow;
-	CTFLabel						*m_pNoClip;
-	CTFLabel						*m_pNoClipShadow;
+	CExLabel						*m_pInClip;
+	CExLabel						*m_pInClipShadow;
+	CExLabel						*m_pInReserve;
+	CExLabel						*m_pInReserveShadow;
+	CExLabel						*m_pNoClip;
+	CExLabel						*m_pNoClipShadow;
 };
 
 #endif	// TF_HUD_AMMOSTATUS_H

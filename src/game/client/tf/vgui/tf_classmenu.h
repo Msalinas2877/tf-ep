@@ -57,7 +57,7 @@ public:
 			}
 		}
 
-		CTFRichText *pRichText = dynamic_cast<CTFRichText *>(FindChildByName( "classInfo" ) );
+		CExRichText *pRichText = dynamic_cast<CExRichText *>(FindChildByName( "classInfo" ) );
 		if ( pRichText )
 		{
 			pRichText->InvalidateLayout( true, false );
@@ -117,7 +117,7 @@ private:
 
 #ifndef _X360
 	CTFImagePanel *m_ClassCountImages[CLASS_COUNT_IMAGES];
-	CTFLabel *m_pCountLabel;
+	CExLabel *m_pCountLabel;
 #endif
 };
 
