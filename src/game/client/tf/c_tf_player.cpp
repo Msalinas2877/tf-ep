@@ -901,6 +901,20 @@ public:
 EXPOSE_INTERFACE( CProxyBurnLevel, IMaterialProxy, "BurnLevel" IMATERIAL_PROXY_INTERFACE_VERSION );
 
 //-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+class CProxyUrineLevel : public CResultProxy
+{
+public:
+	void OnBind( void *pC_BaseEntity )
+	{
+		m_pResult->SetVecValue( 1, 1, 1 );
+	}
+};
+
+EXPOSE_INTERFACE( CProxyUrineLevel, IMaterialProxy, "YellowLevel" IMATERIAL_PROXY_INTERFACE_VERSION );
+
+//-----------------------------------------------------------------------------
 // Purpose: RecvProxy that converts the Player's object UtlVector to entindexes
 //-----------------------------------------------------------------------------
 void RecvProxy_PlayerObjectList( const CRecvProxyData *pData, void *pStruct, void *pOut )
