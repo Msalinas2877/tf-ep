@@ -13,15 +13,15 @@
 
 #include "tf_shareddefs.h"
 #include <vgui/IScheme.h>
-#include <vgui_controls/ImagePanel.h>
+#include <vgui_controls/ScalableImagePanel.h>
 #include "GameEventListener.h"
 
 #define MAX_BG_LENGTH		128
 
-class CTFImagePanel : public vgui::ImagePanel, public CGameEventListener
+class CTFImagePanel : public vgui::ScalableImagePanel, public CGameEventListener
 {
 public:
-	DECLARE_CLASS_SIMPLE( CTFImagePanel, vgui::ImagePanel );
+	DECLARE_CLASS_SIMPLE( CTFImagePanel, vgui::ScalableImagePanel );
 
 	CTFImagePanel( vgui::Panel *parent, const char *name );
 

@@ -28,7 +28,7 @@ DECLARE_BUILD_FACTORY( CTFImagePanel );
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-CTFImagePanel::CTFImagePanel( Panel *parent, const char *name ) : ImagePanel( parent, name )
+CTFImagePanel::CTFImagePanel( Panel *parent, const char *name ) : ScalableImagePanel( parent, name )
 {
 	for ( int i = 0; i < TF_TEAM_COUNT; i++ )
 	{
