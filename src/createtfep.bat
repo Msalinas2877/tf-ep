@@ -1,1 +1,1 @@
-devtools\bin\vpc.exe /tf-ep +game /mksln games.sln
+devtools\bin\vpc.exe /tf_ep +game /mksln games.sln
