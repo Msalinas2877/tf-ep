@@ -429,8 +429,8 @@ CObjectInfo::~CObjectInfo()
 CObjectInfo g_ObjectInfos[OBJ_LAST] =
 {
 	CObjectInfo( "OBJ_DISPENSER" ),
-	CObjectInfo( "OBJ_TELEPORTER_ENTRANCE" ),
-	CObjectInfo( "OBJ_TELEPORTER_EXIT" ),
+	CObjectInfo( "OBJ_TELEPORTER" ),
+	CObjectInfo( "OBJ_TELEPORTER" ),
 	CObjectInfo( "OBJ_SENTRYGUN" ),
 	CObjectInfo( "OBJ_ATTACHMENT_SAPPER" ),
 };
