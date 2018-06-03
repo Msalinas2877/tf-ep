@@ -56,3 +56,8 @@ config.cfg
 
 *.vpc_crc
 *.filters
+*.sentinel
+*.pdb
+src/lib/public/tier1.lib
+src/lib/public/mathlib.lib
+src/lib/public/vgui_controls.lib
