@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 
 $Macro SRCDIR		"..\.."
-$Macro GAMENAME 	"tf_mod"
+$Macro GAMENAME 	"tf-ep"
 
 $Include "$SRCDIR\game\client\client_base.vpc"
 
@@ -14,7 +14,7 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	".\hl2;.\tf;.\tf\vgui;$SRCDIR\game\shared\Multiplayer;$SRCDIR\game\shared\tf;$BASE"
-		$PreprocessorDefinitions		"$BASE;TF_MOD_CLIENT"
+		$PreprocessorDefinitions		"$BASE;TF-EP_CLIENT"
 	}
 }
 
