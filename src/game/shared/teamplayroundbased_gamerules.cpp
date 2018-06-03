@@ -265,7 +265,7 @@ void cc_ScrambleTeams( const CCommand& args )
 }
 
 static ConCommand mp_scrambleteams( "mp_scrambleteams", cc_ScrambleTeams, "Scramble the teams and restart the game" );
-#ifdef TF_MOD
+#ifdef TF_EP
 // Disabled by default since there's no autoscramble in old TF2.
 ConVar mp_scrambleteams_auto( "mp_scrambleteams_auto", "0", FCVAR_NOTIFY, "Server will automatically scramble the teams if criteria met.  Only works on dedicated servers." );
 #else
@@ -1834,7 +1834,7 @@ void CTeamplayRoundBasedRules::State_Think_TEAM_WIN( void )
 {
 	if ( gpGlobals->curtime > m_flStateTransitionTime )
 	{
-#if defined( TF_DLL ) || defined ( TF_MOD )
+#if defined( TF_DLL ) || defined ( TF_EP )
 		IGameEvent *event = gameeventmanager->CreateEvent( "scorestats_accumulated_update" );
 		if ( event )
 		{
@@ -3206,7 +3206,7 @@ void CTeamplayRoundBasedRules::ResetScores( void )
 	m_bResetRoundsPlayed = true;
 	//m_flStopWatchTime = -1.0f;
 
-#if defined( TF_DLL ) || defined ( TF_MOD )
+#if defined( TF_DLL ) || defined ( TF_EP )
 	IGameEvent *event = gameeventmanager->CreateEvent( "scorestats_accumulated_reset" );
 	if ( event )
 	{
@@ -3374,7 +3374,7 @@ string_t CTeamplayRoundBasedRules::GetLastPlayedRound( void )
 //-----------------------------------------------------------------------------
 CTeamRoundTimer *CTeamplayRoundBasedRules::GetActiveRoundTimer( void )
 {
-#if defined( TF_DLL ) || defined ( TF_MOD )
+#if defined( TF_DLL ) || defined ( TF_EP )
 	int iTimerEntIndex = ObjectiveResource()->GetTimerInHUD();
 	return ( dynamic_cast<CTeamRoundTimer *>( UTIL_EntityByIndex( iTimerEntIndex ) ) );
 #else

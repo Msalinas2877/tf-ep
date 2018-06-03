@@ -1158,6 +1158,7 @@ void CHLClient::PostInit()
 #endif
 #ifdef TF_EP_CLIENT
 	g_pVGuiLocalize->AddFile("resource/tf_english.txt", "GAME");
+	engine->ClientCmd("hud_reloadscheme");
 #endif
 }
 
@@ -1724,7 +1725,7 @@ void CHLClient::LevelShutdown( void )
 
 	messagechars->Clear();
 
-#if !( defined( TF_CLIENT_DLL ) || defined( TF_MOD_CLIENT ) )
+#if !( defined( TF_CLIENT_DLL ) || defined( TF_EP_CLIENT ) )
 	// don't want to do this for TF2 because we have particle systems in our
 	// character loadout screen that can be viewed when we're not connected to a server
 	g_pParticleSystemMgr->UncacheAllParticleSystems();

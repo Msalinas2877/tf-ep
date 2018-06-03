@@ -532,7 +532,7 @@ void CModelPanel::Paint()
 	}
 
 	Vector vecExtraModelOffset( 0, 0, 0 );
-#ifdef TF_MOD_CLIENT
+#ifdef TF_EP_CLIENT
 	float flWidthRatio = engine->GetScreenAspectRatio() / ( 4.0f / 3.0f );
 #else
 	float flWidthRatio = ((float)w / (float)h ) / ( 4.0f / 3.0f );

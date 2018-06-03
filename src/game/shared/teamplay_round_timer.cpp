@@ -44,7 +44,7 @@
 #define ROUND_SETUP_2SECS	"Announcer.RoundBegins2Seconds"
 #define ROUND_SETUP_1SECS	"Announcer.RoundBegins1Seconds"
 
-#if defined( TF_CLIENT_DLL ) || defined ( TF_MOD_CLIENT )
+#if defined( TF_CLIENT_DLL ) || defined ( TF_EP_CLIENT )
 #define MERASMUS_SETUP_5SECS	"Merasmus.RoundBegins5Seconds"
 #define MERASMUS_SETUP_4SECS	"Merasmus.RoundBegins4Seconds"
 #define MERASMUS_SETUP_3SECS	"Merasmus.RoundBegins3Seconds"
@@ -82,7 +82,7 @@ enum
 
 extern bool IsInCommentaryMode();
 
-#if defined( GAME_DLL ) && ( defined( TF_DLL ) || defined( TF_MOD ) )
+#if defined( GAME_DLL ) && ( defined( TF_DLL ) || defined( TF_EP ) )
 ConVar tf_overtime_nag( "tf_overtime_nag", "0", FCVAR_NOTIFY, "Announcer overtime nag." );
 #endif
 
@@ -270,7 +270,7 @@ CTeamRoundTimer::~CTeamRoundTimer( void )
 //-----------------------------------------------------------------------------
 void CTeamRoundTimer::Precache( void )
 {
-#if defined( TF_DLL ) || defined( TF_CLIENT_DLL ) || defined( TF_MOD ) || defined( TF_MOD_CLIENT ) 
+#if defined( TF_DLL ) || defined( TF_CLIENT_DLL ) || defined( TF_EP ) || defined( TF_EP_CLIENT ) 
 	PrecacheScriptSound( ROUND_TIMER_60SECS );
 	PrecacheScriptSound( ROUND_TIMER_30SECS );
 	PrecacheScriptSound( ROUND_TIMER_10SECS );
@@ -771,7 +771,7 @@ void CTeamRoundTimer::SendTimeWarning( int nWarning )
 					}
 				}
 
-#if defined( TF_CLIENT_DLL ) || defined( TF_MOD_CLIENT )
+#if defined( TF_CLIENT_DLL ) || defined( TF_EP_CLIENT )
 				if ( bShouldPlaySound == true )
 				{
 					pPlayer->EmitSound( GetTimeWarningSound( nWarning ) );
@@ -1002,7 +1002,7 @@ void CTeamRoundTimer::RoundTimerThink( void )
 				{
 					TeamplayRoundBasedRules()->SetOvertime( true );
 				}
-#if defined( TF_DLL ) || defined( TF_MOD )
+#if defined( TF_DLL ) || defined( TF_EP )
 				else
 				{
 					if ( tf_overtime_nag.GetBool() && ( gpGlobals->curtime > m_flNextOvertimeNag ) )

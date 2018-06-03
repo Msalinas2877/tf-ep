@@ -19,7 +19,7 @@
 #define ROUND_TO_TICKS( t )		( TICK_INTERVAL * TIME_TO_TICKS( t ) )
 #define TICK_NEVER_THINK		(-1)
 
-#if defined( TF_DLL ) || defined( TF_MOD )
+#if defined( TF_DLL ) || defined( TF_EP )
 #define ANIMATION_CYCLE_BITS		10
 #else
 #define ANIMATION_CYCLE_BITS		15
@@ -102,7 +102,7 @@ public:
 
 #define MAX_CLIMB_SPEED		200
 
-#if defined(TF_DLL) || defined(TF_CLIENT_DLL) || defined(TF_MOD) || defined(TF_MOD_CLIENT)
+#if defined(TF_DLL) || defined(TF_CLIENT_DLL) || defined(TF_EP) || defined(TF_EP_CLIENT)
 	#define TIME_TO_DUCK		0.2
 	#define TIME_TO_DUCK_MS		200.0f
 #else
@@ -887,7 +887,7 @@ enum
 //-----------------------------------------------------------------------------
 // Commentary Mode
 //-----------------------------------------------------------------------------
-#if defined(TF_DLL) || defined(TF_CLIENT_DLL) || defined(TF_MOD) || defined(TF_MOD_CLIENT)
+#if defined(TF_DLL) || defined(TF_CLIENT_DLL) || defined(TF_EP) || defined(TF_EP_CLIENT)
 #define GAME_HAS_NO_USE_KEY
 
 #if defined( SPROP_COORD )

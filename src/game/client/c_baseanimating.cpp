@@ -3137,7 +3137,7 @@ int C_BaseAnimating::DrawModel( int flags )
 
 	int drawn = 0;
 
-#if defined( TF_CLIENT_DLL ) || defined ( TF_MOD_CLIENT )
+#if defined( TF_CLIENT_DLL ) || defined ( TF_EP_CLIENT )
 	ValidateModelIndex();
 #endif
 
