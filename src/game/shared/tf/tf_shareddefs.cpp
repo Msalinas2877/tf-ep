@@ -44,7 +44,10 @@ const char *g_aPlayerClassNames[] =
 	"#TF_Class_Name_HWGuy",
 	"#TF_Class_Name_Pyro",
 	"#TF_Class_Name_Spy",
-	"#TF_Class_Name_Engineer"
+	"#TF_Class_Name_Engineer",
+	"#TF_Class_Name_Civilian",
+	"",
+	"#TF_Random"
 };
 
 const char *g_aPlayerClassNames_NonLocalized[] =
@@ -58,8 +61,46 @@ const char *g_aPlayerClassNames_NonLocalized[] =
 	"Heavy",
 	"Pyro",
 	"Spy",
-	"Engineer"
+	"Engineer",
+	"Civilian",
+	"",
+	"Random"
 };
+
+const char *g_aRawPlayerClassNamesShort[] =
+{
+	"undefined",
+	"scout",
+	"sniper",
+	"soldier",
+	"demo",
+	"medic",
+	"heavy",
+	"pyro",
+	"spy",
+	"engineer",
+	"civilian",
+	"",
+	"random"
+};
+
+const char *g_aRawPlayerClassNames[] =
+{
+	"undefined",
+	"scout",
+	"sniper",
+	"soldier",
+	"demoman",
+	"medic",
+	"heavyweapons",
+	"pyro",
+	"spy",
+	"engineer",
+	"civilian",
+	"",
+	"random"
+};
+
 
 //-----------------------------------------------------------------------------
 // Gametypes.

@@ -123,6 +123,8 @@ enum
 
 extern const char *g_aPlayerClassNames[];				// localized class names
 extern const char *g_aPlayerClassNames_NonLocalized[];	// non-localized class names
+extern const char *g_aRawPlayerClassNamesShort[];	// raw short class mames
+extern const char *g_aRawPlayerClassNames[];	// raw class names
 
 //-----------------------------------------------------------------------------
 // For entity_capture_flags to use when placed in the world
