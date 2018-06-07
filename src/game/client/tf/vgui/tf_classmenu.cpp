@@ -22,6 +22,7 @@
 #include "vguicenterprint.h"
 #include "imagemouseoverbutton.h"
 #include "IconPanel.h"
+#include "fmtstr.h"
 
 #include "IGameUIFuncs.h" // for key bindings
 
@@ -97,7 +98,17 @@ CTFClassMenu::CTFClassMenu( IViewPort *pViewPort ) : CClassMenu( pViewPort )
 
 	m_pCountLabel = NULL;
 #endif
-
+	m_pClassButtons[TF_CLASS_SCOUT] = new CExImageButton( this, "scout", "" );
+	m_pClassButtons[TF_CLASS_SOLDIER] = new CExImageButton( this, "soldier", "" );
+	m_pClassButtons[TF_CLASS_PYRO] = new CExImageButton( this, "pyro", "" );
+	m_pClassButtons[TF_CLASS_DEMOMAN] = new CExImageButton( this, "demoman", "" );
+	m_pClassButtons[TF_CLASS_MEDIC] = new CExImageButton( this, "medic", "" );
+	m_pClassButtons[TF_CLASS_HEAVYWEAPONS] = new CExImageButton( this, "heavyweapons", "" );
+	m_pClassButtons[TF_CLASS_SNIPER] = new CExImageButton( this, "sniper", "" );
+	m_pClassButtons[TF_CLASS_ENGINEER] = new CExImageButton( this, "engineer", "" );
+	m_pClassButtons[TF_CLASS_SPY] = new CExImageButton( this, "spy", "" );
+	m_pClassButtons[TF_CLASS_RANDOM] = new CExImageButton( this, "randompc", "" );
+	
 	vgui::ivgui()->AddTickSignal( GetVPanel() );
 }
 
@@ -107,8 +118,21 @@ CTFClassMenu::CTFClassMenu( IViewPort *pViewPort ) : CClassMenu( pViewPort )
 void CTFClassMenu::ApplySchemeSettings( IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
+	
+	LoadControlSettings( "Resource/UI/ClassSelection.res" );
+	SetMouseInputEnabled( true );
 
-	LoadControlSettings( "Resource/UI/ClassMenu.res" );
+	char* team = "red";
+	if ( GetTeamNumber() == TF_TEAM_BLUE )
+		team = "blu";
+	for (int i = 1; i < TF_CLASS_MENU_BUTTONS; i++)
+	{
+		if ( m_pClassButtons[i] )
+		{
+			m_pClassButtons[i]->SetImageSelected( CFmtStr( "class_sel_sm_%s_%s", g_aRawPlayerClassNamesShort[i], team ) );
+			m_pClassButtons[i]->SetImageArmed( CFmtStr( "class_sel_sm_%s_%s", g_aRawPlayerClassNamesShort[i], team ) );
+		}
+	}
 }
 
 void CTFClassMenu::PerformLayout()
@@ -123,23 +147,6 @@ void CTFClassMenu::PerformLayout()
 		m_pCountLabel->SizeToContents();
 	}
 #endif
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-CImageMouseOverButton<CTFClassInfoPanel> *CTFClassMenu::GetCurrentClassButton()
-{
-	int iClass = TF_CLASS_HEAVYWEAPONS;
-	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-
-	if ( pLocalPlayer && pLocalPlayer->m_Shared.GetDesiredPlayerClassIndex() != TF_CLASS_UNDEFINED )
-	{
-		iClass = pLocalPlayer->m_Shared.GetDesiredPlayerClassIndex();
-	}
-
-	m_iCurrentClassIndex = GetIndexForClass( iClass );
-	return m_pClassButtons[iClass];
 }
 
 //-----------------------------------------------------------------------------
@@ -177,43 +184,9 @@ void CTFClassMenu::ShowPanel( bool bShow )
 		m_iClassMenuKey = gameuifuncs->GetButtonCodeForBind( "changeclass" );
 		m_iScoreBoardKey = gameuifuncs->GetButtonCodeForBind( "showscores" );
 
-		CImageMouseOverButton<CTFClassInfoPanel> *pInitialButton = GetCurrentClassButton();
-
-		for( int i = 0; i < GetChildCount(); i++ ) 
-		{
-			CImageMouseOverButton<CTFClassInfoPanel> *button = dynamic_cast<CImageMouseOverButton<CTFClassInfoPanel> *>( GetChild( i ) );
-
-			if ( button )
-			{
-				if ( button == pInitialButton )
-				{
-					button->ShowPage();
-					button->SetArmed( true );
-					button->SetAsDefaultButton( 1 );
-
-					g_lastButton = button;
-				}
-				else
-				{
-					button->HidePage();
-					button->SetArmed( false );
-				}
-			}
-		}
 	}
 	else
 	{
-		// turn off all of our ClassInfo panels so the VCDs will stop playing
-		for( int i = 0; i < GetChildCount(); i++ ) 
-		{
-			CImageMouseOverButton<CTFClassInfoPanel> *button = dynamic_cast<CImageMouseOverButton<CTFClassInfoPanel> *>( GetChild( i ) );
-
-			if ( button )
-			{
-				button->HidePage();
-			}
-		}
-
 		// everything is off so just reset these for next time
 		g_lastButton = NULL;
 		g_lastPanel = NULL;
@@ -256,7 +229,7 @@ void CTFClassMenu::OnKeyCodePressed( KeyCode code )
 			m_iCurrentClassIndex = ( m_iCurrentClassIndex % TF_CLASS_MENU_BUTTONS );
 		} while( ( m_pClassButtons[ iRemapIndexToClass[m_iCurrentClassIndex] ] == NULL ) && ( loopCheck < TF_CLASS_MENU_BUTTONS ) );
 		
-		CImageMouseOverButton<CTFClassInfoPanel> *pButton = m_pClassButtons[ iRemapIndexToClass[m_iCurrentClassIndex] ];
+		CExImageButton *pButton = m_pClassButtons[ iRemapIndexToClass[m_iCurrentClassIndex] ];
 		if ( pButton )
 		{
 			pButton->OnCursorEntered();
@@ -276,7 +249,7 @@ void CTFClassMenu::OnKeyCodePressed( KeyCode code )
 			}
 		} while( ( m_pClassButtons[ iRemapIndexToClass[m_iCurrentClassIndex] ] == NULL ) && ( loopCheck < TF_CLASS_MENU_BUTTONS ) );
 
-		CImageMouseOverButton<CTFClassInfoPanel> *pButton = m_pClassButtons[ iRemapIndexToClass[m_iCurrentClassIndex] ];
+		CExImageButton *pButton = m_pClassButtons[ iRemapIndexToClass[m_iCurrentClassIndex] ];
 		if ( pButton )
 		{
 			pButton->OnCursorEntered();
@@ -439,6 +412,21 @@ void CTFClassMenu::OnClose()
 	BaseClass::OnClose();
 }
 
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFClassMenu::OnCommand( const char* cmd )
+{
+	if ( !Q_strncmp(cmd, "select", 6) )
+	{
+		int classindex = atoi(Q_strrchr( cmd, ' ' ));
+		int index = ToTFPlayer( CBasePlayer::GetLocalPlayer() )->GetPlayerClass()->GetClassIndex();
+		if (index > TF_CLASS_UNDEFINED)
+			m_pClassButtons[index]->SetSelected( false );
+		engine->ExecuteClientCmd(CFmtStr("joinclass %s", g_aRawPlayerClassNames[classindex]));
+		ShowPanel(false);
+	}
+}
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
