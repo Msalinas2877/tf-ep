@@ -9,11 +9,6 @@ $Macro GAMENAME 	"tf_ep"
 
 $Include "$SRCDIR\game\server\server_base.vpc"
 
-$Linux
-{
-	$BuildForLinux 1
-}
-
 $Configuration
 {
 	$Compiler
@@ -257,5 +252,9 @@ $Project "Server (TF)"
 			$File	"$SRCDIR\game\shared\weapon_ifmsteadycam.cpp"
 			$File	"$SRCDIR\game\shared\weapon_ifmsteadycam.h"
 		}
+	}
+	$Folder	"Link Libraries"
+	{
+		$File	"$SRCDIR\extern\extern.lib"
 	}
 }

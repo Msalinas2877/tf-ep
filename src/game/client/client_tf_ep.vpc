@@ -309,4 +309,8 @@ $Project "Client (TF)"
 			$File	"$SRCDIR\game\shared\weapon_ifmsteadycam.cpp"
 		}
 	}
+	$Folder	"Link Libraries"
+	{
+		$File	"$SRCDIR\extern\extern.lib"
+	}
 }
