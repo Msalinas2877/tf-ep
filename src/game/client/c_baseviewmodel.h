@@ -15,5 +15,6 @@
 #include "c_baseanimating.h"
 #include "utlvector.h"
 #include "baseviewmodel_shared.h"
-
+extern ConVar cl_flipviewmodels;
+extern void FormatViewModelAttachment( Vector &vOrigin, bool bInverse );
 #endif // C_BASEVIEWMODEL_H

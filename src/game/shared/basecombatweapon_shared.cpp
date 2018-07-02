@@ -1109,7 +1109,7 @@ void CBaseCombatWeapon::SendViewModelAnim( int nSequence )
 	if ( !IsPredicted() )
 		return;
 #endif
-	
+
 	if ( nSequence < 0 )
 		return;
 
@@ -1117,7 +1117,7 @@ void CBaseCombatWeapon::SendViewModelAnim( int nSequence )
 	
 	if ( pOwner == NULL )
 		return;
-	
+
 	CBaseViewModel *vm = pOwner->GetViewModel( m_nViewModelIndex, false );
 	
 	if ( vm == NULL )
@@ -1193,16 +1193,18 @@ void CBaseCombatWeapon::SetViewModel()
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::SendWeaponAnim( int iActivity )
 {
-#ifdef USES_ECON_ITEMS
+#ifdef TF_EP_ECON
 	iActivity = TranslateViewmodelHandActivity( (Activity)iActivity );
 #endif		
 	// NVNT notify the haptics system of this weapons new activity
+#if !defined TF_EP || TF_EP_CLIENT
 #ifdef WIN32
 #ifdef CLIENT_DLL
 	if ( prediction->InPrediction() && prediction->IsFirstTimePredicted() )
 #endif
 #ifndef _X360
 		HapticSendWeaponAnim(this,iActivity);
+#endif
 #endif
 #endif
 	//For now, just set the ideal activity and be done with it

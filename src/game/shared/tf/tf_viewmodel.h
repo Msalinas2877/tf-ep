@@ -69,4 +69,19 @@ private:
 #endif
 };
 
+#ifdef CLIENT_DLL
+class C_ViewmodelAttachmentModel : public CBaseAnimating
+{
+public:
+	DECLARE_CLASS( C_ViewmodelAttachmentModel, CBaseAnimating )
+	virtual bool InitializeAsClientEntity( const char *pszModelName, RenderGroup_t renderGroup );
+	virtual int InternalDrawModel( int flags );
+	virtual bool OnPostInternalDrawModel( ClientModelRenderInfo_t *pInfo );
+	virtual void StandardBlendingRules( CStudioHdr *pStudioHdr, Vector pos[], Quaternion q[], float currentTime, int boneMask );
+	virtual void FormatViewModelAttachment( int nAttachment, matrix3x4_t &attachmentToWorld );
+	virtual int GetSkin( void );
+
+};
+#endif
+
 #endif // TF_VIEWMODEL_H

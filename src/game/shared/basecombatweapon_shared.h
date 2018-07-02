@@ -24,7 +24,7 @@
 #endif
 
 // Hacky
-#if defined ( TF_CLIENT_DLL ) || defined ( TF_DLL )
+#if defined ( TF_CLIENT_DLL ) || defined ( TF_DLL )	|| defined ( TF_EP_CLIENT ) || defined ( TF_EP )
 #include "econ_entity.h"
 #endif // TF_CLIENT_DLL || TF_DLL
 
@@ -140,7 +140,7 @@ namespace vgui2
 // Purpose: Base weapon class, shared on client and server
 //-----------------------------------------------------------------------------
 
-#if defined USES_ECON_ITEMS
+#if defined TF_EP_ECON
 #define BASECOMBATWEAPON_DERIVED_FROM		CEconEntity
 #else 
 #define BASECOMBATWEAPON_DERIVED_FROM		CBaseAnimating
@@ -474,7 +474,7 @@ public:
 
 	virtual bool			OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options ) 
 	{ 
-#if defined USES_ECON_ITEMS
+#if defined TF_EP_ECON
 		return BaseClass::OnFireEvent( pViewModel, origin, angles, event, options );
 #else
 		return false; 

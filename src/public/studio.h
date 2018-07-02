@@ -30,7 +30,7 @@
 
 #define STUDIO_ENABLE_PERF_COUNTERS
 
-#define STUDIO_SEQUENCE_ACTIVITY_LOOKUPS_ARE_SLOW 0 
+#define STUDIO_SEQUENCE_ACTIVITY_LOOKUPS_ARE_SLOW 1
 // If this is set to 1, then the activity->sequence mapping inside
 // the CStudioHdr will not be initialized until the first call to 
 // SelectWeightedSequence() or HaveSequenceForActivity(). If set 

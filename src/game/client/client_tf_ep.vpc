@@ -13,8 +13,8 @@ $Configuration
 {
 	$Compiler
 	{
-		$AdditionalIncludeDirectories	".\hl2;.\tf;.\tf\vgui;$SRCDIR\game\shared\Multiplayer;$SRCDIR\game\shared\tf;$BASE"
-		$PreprocessorDefinitions		"$BASE;TF_EP_CLIENT"
+		$AdditionalIncludeDirectories	".\hl2;.\tf;.\tf\vgui;$SRCDIR\game\shared\Multiplayer;$SRCDIR\game\shared\tf;$SRCDIR\game\shared\econ;$SRCDIR\extern\econ;$BASE"
+		$PreprocessorDefinitions		"$BASE;TF_EP_CLIENT;TF_EP_ECON"
 	}
 }
 
@@ -32,6 +32,10 @@ $Project "Client (TF)"
 		$File	"c_team_objectiveresource.h"
 		$File	"c_team_train_watcher.cpp"
 		$File	"c_team_train_watcher.h"
+		$File	"$SRCDIR\game\shared\econ\econ_entity.cpp"
+		$File	"$SRCDIR\game\shared\econ\econ_entity.h"
+		$File	"$SRCDIR\game\shared\econ\econ_item_view.cpp"
+		$File	"$SRCDIR\game\shared\econ\econ_item_view.h"
 		$File	"hud_base_account.cpp"
 		$File	"hud_base_account.h"
 		$File	"hud_controlpointicons.cpp"

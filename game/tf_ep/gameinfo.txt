@@ -25,6 +25,7 @@
 			// folder.
 			// Note that this folder is scanned only when the game is booted.
 			game+mod			|gameinfo_path|custom/*
+			game+mod			"|all_source_engine_paths|../Team Fortress 2/tf/custom/*"
 
 			// Search game's files after any user customizations. This is also where any writes should go.
 			game+game_write+mod+mod_write+default_write_path		|gameinfo_path|.

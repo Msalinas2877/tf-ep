@@ -49,9 +49,64 @@
 #include "steam/steam_api.h"
 #include "cdll_int.h"
 #include "tf_weaponbase.h"
+#include "init_factory.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+
+class CInventoryManager : public CAutoGameSystemPerFrame
+{
+public:
+CInventoryManager( char const *name ) : CAutoGameSystemPerFrame( name )
+{
+}
+
+virtual bool Init() 
+{
+	factorylist_t factories;
+	FactoryList_Retrieve( factories );
+	ItemSystem()->Init( &factories.engineFactory );
+	return true;
+}
+};
+
+static CInventoryManager g_InventoryManager( "CInventoryManager" );
+
+CON_COMMAND_F( give_item, "", FCVAR_NONE )
+{
+	CTFPlayer *pPlayer = ToTFPlayer(UTIL_GetCommandClient());
+	if ( pPlayer )
+	{
+		CEconItemView item;
+		int itemindex = atoi( args.Arg( 1 ) );
+		item.Init( itemindex );
+		if ( !item.GetStaticData() )
+			return Msg("Unknown item index");
+
+		int weapontype = -1;
+
+		if ( !Q_strcmp( item.GetStaticData()->m_szItemSlot, "primary" ) )
+		{
+			weapontype = TF_WPN_TYPE_PRIMARY;
+		}
+		else if ( !Q_strcmp( item.GetStaticData()->m_szItemSlot, "secondary" ) )
+		{
+			weapontype = TF_WPN_TYPE_SECONDARY;
+		}
+		else if ( !Q_strcmp( item.GetStaticData()->m_szItemSlot, "melee" ) )
+		{
+			weapontype = TF_WPN_TYPE_MELEE;
+		}
+
+		if ( CBaseCombatWeapon* pWeapon = pPlayer->Weapon_GetSlot( weapontype ) )
+		{
+			pPlayer->Weapon_Detach( pWeapon );
+			UTIL_Remove( pWeapon );
+		}
+		if( CBaseCombatWeapon* pWeapon = (CBaseCombatWeapon *)pPlayer->GiveNamedItem( item.GetStaticData()->m_szItemClass, 0, &item, 0 ) )
+			pWeapon->DefaultTouch( pPlayer );
+	}
+}
 
 #define DAMAGE_FORCE_SCALE_SELF				9
 
@@ -672,6 +727,11 @@ void CTFPlayer::PrecachePlayerModels( void )
 				PrecacheModel( pszHWMModel );
 			}
 		}
+		const char *pszHandModel = GetPlayerClassData( i )->m_szHandModelName;
+		if ( pszHandModel && pszHandModel[0] )
+		{
+			PrecacheModel( pszHandModel );
+		}
 	}
 	
 	if ( TFGameRules() && TFGameRules()->IsBirthday() )
@@ -1037,7 +1097,7 @@ void CTFPlayer::ManageBuilderWeapons( TFPlayerClassData_t *pData )
 		}
 		else
 		{
-			pBuilder = (CTFWeaponBase *)GiveNamedItem( "tf_weapon_builder" );
+			pBuilder = (CTFWeaponBase *)BaseClass::GiveNamedItem( "tf_weapon_builder" );
 
 			if ( pBuilder )
 			{
@@ -1099,8 +1159,9 @@ void CTFPlayer::ManageRegularWeapons( TFPlayerClassData_t *pData )
 			}
 			else
 			{
-				pWeapon = (CTFWeaponBase *)GiveNamedItem( pszWeaponName );
-
+				CEconItemView item;
+				item.Init( iWeaponID - 1 );
+				pWeapon = (CTFWeaponBase *)GiveNamedItem( pszWeaponName, 0, &item, 0 );
 				if ( pWeapon )
 				{
 					pWeapon->DefaultTouch( this );
@@ -1127,6 +1188,44 @@ void CTFPlayer::ManageRegularWeapons( TFPlayerClassData_t *pData )
 		Weapon_Switch( Weapon_GetSlot( 0 ) );
 		Weapon_SetLast( Weapon_GetSlot( 1 ) );
 	}
+}
+
+CBaseEntity* CTFPlayer::GiveNamedItem( const char *pszName, int iSubType, CEconItemView* item, bool hasweapon )
+{
+// If I already own this type don't create one
+	if ( Weapon_OwnsThisType(pszName, iSubType) )
+		return NULL;
+
+	// Msg( "giving %s\n", pszName );
+
+	EHANDLE pent;
+
+	pent = CreateEntityByName(pszName);
+	if ( pent == NULL )
+	{
+		Msg( "NULL Ent in GiveNamedItem!\n" );
+		return NULL;
+	}
+
+	pent->SetLocalOrigin( GetLocalOrigin() );
+	pent->AddSpawnFlags( SF_NORESPAWN );
+
+	CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase*>((CBaseEntity*)pent);
+	if ( pWeapon )
+	{
+		pWeapon->m_Item.Init( item->GetID() );
+		pWeapon->SetSubType( iSubType );
+		pWeapon->SetOwner( this );
+	}
+
+	DispatchSpawn( pent );
+
+	if ( pent != NULL && !(pent->IsMarkedForDeletion()) ) 
+	{
+		pent->Touch( this );
+	}
+
+	return pent;
 }
 
 //-----------------------------------------------------------------------------

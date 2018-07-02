@@ -6584,7 +6584,7 @@ bool CBasePlayer::BumpWeapon( CBaseCombatWeapon *pWeapon )
 	if ( !IsAllowedToPickupWeapons() )
 		return false;
 
-	if ( pOwner || !Weapon_CanUse( pWeapon ) || !g_pGameRules->CanHavePlayerItem( this, pWeapon ) )
+	if ( ( pOwner != this ) || !Weapon_CanUse( pWeapon ) || !g_pGameRules->CanHavePlayerItem( this, pWeapon ) )
 	{
 		if ( gEvilImpulse101 )
 		{

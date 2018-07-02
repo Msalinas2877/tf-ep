@@ -90,6 +90,14 @@ public:
 	virtual float GetChargeMaxTime( void ) = 0;
 };
 
+//struct for viewmodel activity translation
+typedef struct
+{
+	int			baseAct;
+	int			weaponAct;
+	int			weaponType;
+} vmacttable_t;
+
 //=============================================================================
 //
 // Base TF Weapon Class
@@ -108,6 +116,7 @@ class CTFWeaponBase : public CBaseCombatWeapon
 
 	virtual void Spawn();
 	virtual void Precache();
+	virtual int TranslateViewmodelHandActivityInternal( int iActivity );
 	virtual bool IsPredicted() const			{ return true; }
 	virtual void FallInit( void );
 
@@ -120,6 +129,7 @@ class CTFWeaponBase : public CBaseCombatWeapon
 
 	// View model.
 	virtual const char *GetViewModel( int iViewModel = 0 ) const;
+	virtual const char *GetWorldModel( void ) const;
 
 	virtual void Drop( const Vector &vecVelocity );
 	virtual bool Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
@@ -139,7 +149,7 @@ class CTFWeaponBase : public CBaseCombatWeapon
 	void SendReloadEvents();
 
 	virtual bool CanDrop( void ) { return false; }
-
+	virtual int GetViewModelWeaponRole()	{ return GetTFWpnData().m_iWeaponType; }
 	// Sound.
 	bool PlayEmptySound();
 
@@ -149,6 +159,7 @@ class CTFWeaponBase : public CBaseCombatWeapon
 
 	virtual void SetWeaponVisible( bool visible );
 
+	static vmacttable_t s_viewmodelacttable[];
 	virtual acttable_t *ActivityList( int &iActivityCount );
 	static acttable_t m_acttablePrimary[];
 	static acttable_t m_acttableSecondary[];

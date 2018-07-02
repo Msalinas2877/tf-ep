@@ -18,8 +18,8 @@ $Configuration
 {
 	$Compiler
 	{
-		$AdditionalIncludeDirectories	"$BASE;$SRCDIR\game\shared\hl2;.\tf;.\tf\vgui;$SRCDIR\game\shared\Multiplayer;$SRCDIR\game\shared\tf"
-		$PreprocessorDefinitions		"$BASE;TF_EP"
+		$AdditionalIncludeDirectories	"$BASE;$SRCDIR\game\shared\hl2;.\tf;.\tf\vgui;$SRCDIR\game\shared\Multiplayer;$SRCDIR\game\shared\tf;$SRCDIR\game\shared\econ;$SRCDIR\extern\econ"
+		$PreprocessorDefinitions		"$BASE;TF_EP;TF_EP_ECON"
 	}
 }
 
@@ -31,6 +31,10 @@ $Project "Server (TF)"
 		$File	"basegrenade_concussion.cpp"
 		$File	"basegrenade_contact.cpp"
 		$File	"basegrenade_timed.cpp"
+		$File	"$SRCDIR\game\shared\econ\econ_entity.cpp"
+		$File	"$SRCDIR\game\shared\econ\econ_entity.h"
+		$File	"$SRCDIR\game\shared\econ\econ_item_view.cpp"
+		$File	"$SRCDIR\game\shared\econ\econ_item_view.h"
 		$File	"EntityFlame.h"
 		$File	"hl2\Func_Monitor.cpp"
 		$File	"GrenadeThrown.cpp"

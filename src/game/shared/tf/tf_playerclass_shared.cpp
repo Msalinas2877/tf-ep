@@ -136,6 +136,16 @@ const char *TFPlayerClassData_t::GetModelName() const
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
+const char *TFPlayerClassData_t::GetHandModelName() const
+{
+//	if ( bgunslinger )
+//		return g_HACK_GunslingerEngineerArmsOverride; // "models\\weapons\\c_models\\c_engineer_gunslinger.mdl"
+	return m_szHandModelName;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
 void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 {
 	// Attributes.
@@ -147,6 +157,7 @@ void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 		Q_strncpy( m_szHWMModelName, pKeyValuesData->GetString( "model_hwm" ), TF_NAME_LENGTH );
 	}
 	Q_strncpy( m_szModelName, pKeyValuesData->GetString( "model" ), TF_NAME_LENGTH );
+	Q_strncpy( m_szHandModelName, pKeyValuesData->GetString( "model_hands" ), TF_NAME_LENGTH );
 	Q_strncpy( m_szLocalizableName, pKeyValuesData->GetString( "localize_name" ), TF_NAME_LENGTH );
 
 	m_flMaxSpeed = pKeyValuesData->GetFloat( "speed_max" );

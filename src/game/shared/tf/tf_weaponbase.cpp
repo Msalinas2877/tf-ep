@@ -247,6 +247,49 @@ void CTFWeaponBase::FallInit( void )
 
 }
 
+vmacttable_t CTFWeaponBase::s_viewmodelacttable[] =
+{
+	//Primary
+	{ ACT_VM_DRAW,				ACT_PRIMARY_VM_DRAW,				TF_WPN_TYPE_PRIMARY },
+	{ ACT_VM_IDLE,				ACT_PRIMARY_VM_IDLE,				TF_WPN_TYPE_PRIMARY },
+	{ ACT_VM_PRIMARYATTACK,		ACT_PRIMARY_VM_PRIMARYATTACK,		TF_WPN_TYPE_PRIMARY },
+	{ ACT_VM_SECONDARYATTACK,	ACT_PRIMARY_VM_SECONDARYATTACK,		TF_WPN_TYPE_PRIMARY },
+	{ ACT_RELOAD_START,			ACT_PRIMARY_RELOAD_START,			TF_WPN_TYPE_PRIMARY },
+	{ ACT_VM_RELOAD,			ACT_PRIMARY_VM_RELOAD,				TF_WPN_TYPE_PRIMARY },
+	{ ACT_RELOAD_FINISH,		ACT_PRIMARY_RELOAD_FINISH,			TF_WPN_TYPE_PRIMARY },
+	//Secondary
+	{ ACT_VM_DRAW,				ACT_SECONDARY_VM_DRAW,				TF_WPN_TYPE_SECONDARY },
+	{ ACT_VM_HOLSTER,			ACT_SECONDARY_VM_HOLSTER,			TF_WPN_TYPE_SECONDARY },
+	{ ACT_VM_IDLE,				ACT_SECONDARY_VM_IDLE,				TF_WPN_TYPE_SECONDARY },
+	{ ACT_VM_PRIMARYATTACK,		ACT_SECONDARY_VM_PRIMARYATTACK,		TF_WPN_TYPE_SECONDARY },
+	{ ACT_VM_SECONDARYATTACK,	ACT_SECONDARY_VM_SECONDARYATTACK,	TF_WPN_TYPE_SECONDARY },
+	{ ACT_VM_RELOAD,			ACT_SECONDARY_VM_RELOAD,			TF_WPN_TYPE_SECONDARY },
+	{ ACT_VM_RELOAD_START,		ACT_SECONDARY_RELOAD_START,			TF_WPN_TYPE_SECONDARY },
+	{ ACT_VM_RELOAD_FINISH,		ACT_SECONDARY_RELOAD_FINISH,		TF_WPN_TYPE_SECONDARY },
+	//Melee
+	{ ACT_VM_DRAW,				ACT_MELEE_VM_DRAW,					TF_WPN_TYPE_MELEE },
+	{ ACT_VM_HOLSTER,			ACT_MELEE_VM_HOLSTER,				TF_WPN_TYPE_MELEE },
+	{ ACT_VM_IDLE,				ACT_MELEE_VM_IDLE,					TF_WPN_TYPE_MELEE },
+	{ ACT_VM_PRIMARYATTACK,		ACT_MELEE_VM_HITCENTER,				TF_WPN_TYPE_MELEE },
+	{ ACT_VM_HITCENTER,			ACT_MELEE_VM_HITCENTER,				TF_WPN_TYPE_MELEE },
+};
+
+// -----------------------------------------------------------------------------
+// Purpose:
+// -----------------------------------------------------------------------------
+int CTFWeaponBase::TranslateViewmodelHandActivityInternal( int iActivity )
+{
+	for (int i = 0; i <= 196; i++)
+	{
+		vmacttable_t pTable = s_viewmodelacttable[i];
+		if ( pTable.baseAct == iActivity && pTable.weaponType == GetViewModelWeaponRole() )
+			return pTable.weaponAct;
+	}
+//	Msg( "Activity: %i does not have a translation\n", iActivity );
+	return iActivity;
+}
+
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 // Input  :  - 
@@ -344,10 +387,20 @@ const char *CTFWeaponBase::GetViewModel( int iViewModel ) const
 {
 	if ( GetPlayerOwner() == NULL )
 	{
-		return BaseClass::GetViewModel();
+		return GetTFWpnData().szViewModel;
+	}
+	else
+	{
+		if( m_Item.GetStaticData()->m_nAttachToHands != 0 )
+			return GetTFPlayerOwner()->GetPlayerClass()->GetHandModelName();
 	}
 
-	return GetTFWpnData().szViewModel;
+	return BaseClass::GetViewModel();
+}
+
+const char *CTFWeaponBase::GetWorldModel( void ) const
+{
+	return m_Item.GetStaticData()->m_szModelPlayer;
 }
 
 //-----------------------------------------------------------------------------

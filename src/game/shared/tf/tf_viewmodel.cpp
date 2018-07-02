@@ -16,7 +16,7 @@
 #include "materialsystem/imaterial.h"
 #include "materialsystem/imaterialvar.h"
 #include "prediction.h"
-
+#include "c_baseviewmodel.h"
 #endif
 
 #include "bone_setup.h"	//temp
@@ -258,6 +258,72 @@ int CTFViewModel::GetSkin()
 	}
 
 	return nSkin;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+bool C_ViewmodelAttachmentModel::InitializeAsClientEntity( const char *pszModelName, RenderGroup_t renderGroup )
+{
+	if ( BaseClass::InitializeAsClientEntity( pszModelName, renderGroup ) )
+	{
+		AddEffects( EF_BONEMERGE );
+		AddEffects( EF_BONEMERGE_FASTCULL );
+		AddEffects( EF_NODRAW );
+		return true;
+	}
+	return false;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+int C_ViewmodelAttachmentModel::InternalDrawModel( int flags )
+{
+	CMatRenderContextPtr pRenderContext( materials );
+	if ( cl_flipviewmodels.GetBool() )
+		pRenderContext->CullMode( MATERIAL_CULLMODE_CW );
+
+	int ret = BaseClass::InternalDrawModel( flags );
+
+	pRenderContext->CullMode( MATERIAL_CULLMODE_CCW );
+
+	return ret;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+bool C_ViewmodelAttachmentModel::OnPostInternalDrawModel( ClientModelRenderInfo_t *pInfo )
+{
+	return OnPostInternalDrawModel( pInfo );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void C_ViewmodelAttachmentModel::StandardBlendingRules( CStudioHdr *pStudioHdr, Vector pos[], Quaternion q[], float currentTime, int boneMask )
+{
+	BaseClass::StandardBlendingRules( pStudioHdr, pos, q, currentTime, boneMask );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void C_ViewmodelAttachmentModel::FormatViewModelAttachment( int nAttachment, matrix3x4_t &attachmentToWorld )
+{
+	Vector vecOrigin;
+	MatrixPosition( attachmentToWorld, vecOrigin );
+	::FormatViewModelAttachment( vecOrigin, false );
+	PositionMatrix( vecOrigin, attachmentToWorld );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+int C_ViewmodelAttachmentModel::GetSkin( void )
+{
+	return BaseClass::GetSkin();
 }
 
 //-----------------------------------------------------------------------------

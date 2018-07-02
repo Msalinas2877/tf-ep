@@ -356,6 +356,7 @@ public:
 
 	void				ManageRegularWeapons( TFPlayerClassData_t *pData );
 	void				ManageBuilderWeapons( TFPlayerClassData_t *pData );
+	virtual CBaseEntity*	GiveNamedItem( const char *pszName, int iSubType, CEconItemView* item, bool hasweapon );
 
 	// Taunts.
 	void				Taunt( void );
