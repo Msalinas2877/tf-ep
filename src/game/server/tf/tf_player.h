@@ -12,6 +12,7 @@
 #include "tf_player_shared.h"
 #include "tf_playerclass.h"
 #include "entity_tfstart.h"
+#include "utlmap.h"
 
 class CTFPlayer;
 class CTFTeam;
@@ -542,7 +543,47 @@ inline int CTFPlayer::StateGet( void ) const
 {
 	return m_Shared.m_nPlayerState;
 }
+#include "GameEventListener.h"
 
+class CInventoryManager : public CAutoGameSystemPerFrame, public CGameEventListener
+{
 
+public:
+static	bool invles( const uint64 &lhs, const uint64 &rhs )	
+	{ 
+		return lhs != rhs; 
+	}
+	CInventoryManager( char const *name ) : CAutoGameSystemPerFrame( name )
+	{
+		m_Player.EnsureCapacity( MAX_PLAYERS );
+		m_Player.SetLessFunc( invles );
+	}
 
+	virtual void PostInit() 
+	{
+		ItemSystem()->Init();
+	}
+
+	virtual void FireGameEvent( IGameEvent *event )
+	{
+	}
+
+	void ParseInventory()
+	{
+
+	}
+
+	struct ClassLoadout {
+		uint ItemIndex[MAX_WEAPON_SLOTS];
+	};
+
+	struct Loadout {
+		ClassLoadout playerclass[TF_LAST_NORMAL_CLASS];
+	};
+
+	CUtlMap<uint64, Loadout> m_Player;
+
+};
+
+extern CInventoryManager* g_InventoryManager;
 #endif	// TF_PLAYER_H

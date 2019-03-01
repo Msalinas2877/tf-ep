@@ -51,11 +51,11 @@ public:
 
 	virtual void OnTick();
 
-	virtual void Paint();
+	virtual void Paint() {/*DUMMY*/};
 
 	// Sets the current mdl
 	virtual void SetMDL( MDLHandle_t handle, void *pProxyData = NULL );
-	virtual void SetMDL( const char *pMDLName, void *pProxyData = NULL );
+	virtual void SetMDL( const char *pMDLName, void *pProxyData = NULL )  {/*DUMMY*/};
 
 	// Sets the camera to look at the model
 	void LookAtMDL( );
@@ -67,8 +67,8 @@ public:
 	void SetSequence( int nSequence, bool bResetSequence = false );
 
 	// Set the pose parameters
-	void SetPoseParameters( const float *pPoseParameters, int nCount );
-	bool SetPoseParameterByName( const char *pszName, float fValue );
+	void SetPoseParameters( const float *pPoseParameters, int nCount ) ;
+	bool SetPoseParameterByName( const char *pszName, float fValue ) {return false;/*DUMMY*/};
 
 	// Set the overlay sequence layers
 	void SetSequenceLayers( const MDLSquenceLayer_t *pSequenceLayers, int nCount );
@@ -83,10 +83,10 @@ public:
 	void SetThumbnailSafeZone( bool bVisible );
 
 	// Bounds.
-	bool GetBoundingBox( Vector &vecBoundsMin, Vector &vecBoundsMax );
+	bool GetBoundingBox( Vector &vecBoundsMin, Vector &vecBoundsMax ) {return false;/*DUMMY*/};
 	bool GetBoundingSphere( Vector &vecCenter, float &flRadius );
 
-	virtual void SetModelAnglesAndPosition( const QAngle &angRot, const Vector &vecPos );
+	virtual void SetModelAnglesAndPosition( const QAngle &angRot, const Vector &vecPos )  {/*DUMMY*/};
 
 	// Attached models.
 	void	SetMergeMDL( MDLHandle_t handle, void *pProxyData = NULL, int nSkin = -1 );
@@ -106,7 +106,7 @@ public:
 
 protected:
 
-	virtual void SetupRenderState( int nDisplayWidth, int nDisplayHeight ) OVERRIDE;
+	virtual void SetupRenderState( int nDisplayWidth, int nDisplayHeight ) OVERRIDE  {/*DUMMY*/};
 
 	struct MDLData_t
 	{

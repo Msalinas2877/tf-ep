@@ -391,7 +391,7 @@ const char *CTFWeaponBase::GetViewModel( int iViewModel ) const
 	}
 	else
 	{
-		if( m_Item.GetStaticData()->m_nAttachToHands != 0 )
+		if( m_Item.GetStaticData()->m_bAttachToHands )
 			return GetTFPlayerOwner()->GetPlayerClass()->GetHandModelName();
 	}
 

@@ -89,7 +89,7 @@
 #include "tier3/tier3.h"
 #include "serverbenchmark_base.h"
 #include "querycache.h"
-
+#include "tf_gc_manager.h"
 
 #ifdef TF_DLL
 #include "gc_clientsystem.h"
@@ -1162,6 +1162,7 @@ void CServerGameDLL::GameServerSteamAPIActivated( void )
 	InventoryManager()->GameServerSteamAPIActivated();
 	TFMapsWorkshop()->GameServerSteamAPIActivated();
 #endif
+	GCManager.AttemptConnection();
 }
 
 //-----------------------------------------------------------------------------

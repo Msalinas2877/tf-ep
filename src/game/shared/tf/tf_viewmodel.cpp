@@ -296,7 +296,7 @@ int C_ViewmodelAttachmentModel::InternalDrawModel( int flags )
 //-----------------------------------------------------------------------------
 bool C_ViewmodelAttachmentModel::OnPostInternalDrawModel( ClientModelRenderInfo_t *pInfo )
 {
-	return OnPostInternalDrawModel( pInfo );
+	return BaseClass::OnPostInternalDrawModel( pInfo );
 }
 
 //-----------------------------------------------------------------------------

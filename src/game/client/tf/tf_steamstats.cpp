@@ -90,14 +90,12 @@ void CTFSteamStats::FireGameEvent( IGameEvent *event )
 	}
 	else if ( 0 == Q_strcmp( pEventName, "user_data_downloaded" ) )
 	{
-		/*
+		
 		Assert( SteamUserStats() );
 		if ( !SteamUserStats() )
 			return; 
 		CTFStatPanel *pStatPanel = GET_HUDELEMENT( CTFStatPanel );
 		Assert( pStatPanel );
-
-		CGameID gameID( engine->GetAppID() );
 
 		for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass <= TF_LAST_NORMAL_CLASS; iClass++ )
 		{
@@ -108,7 +106,7 @@ void CTFSteamStats::FireGameEvent( IGameEvent *event )
 				int iData;
 
 				Q_snprintf( szStatName, ARRAYSIZE( szStatName ), "%s.accum.%s", g_aPlayerClassNames_NonLocalized[iClass], g_SteamStats[iStat].pszName );
-				if ( SteamUserStats()->GetStat( gameID, szStatName, &iData ) )
+				if ( SteamUserStats()->GetStat( szStatName, &iData ) )
 				{
 					if ( pStatPanel->IsLocalFileTrusted() )
 					{
@@ -122,7 +120,7 @@ void CTFSteamStats::FireGameEvent( IGameEvent *event )
 					}					
 				}
 				Q_snprintf( szStatName, ARRAYSIZE( szStatName ), "%s.max.%s", g_aPlayerClassNames_NonLocalized[iClass], g_SteamStats[iStat].pszName );
-				if ( SteamUserStats()->GetStat( gameID, szStatName, &iData ) )
+				if ( SteamUserStats()->GetStat( szStatName, &iData ) )
 				{
 					if ( pStatPanel->IsLocalFileTrusted() )
 					{
@@ -137,7 +135,7 @@ void CTFSteamStats::FireGameEvent( IGameEvent *event )
 				}			
 			}
 		}
-*/
+
 		IGameEvent * event = gameeventmanager->CreateEvent( "player_stats_updated" );
 		if ( event )
 		{
@@ -145,8 +143,8 @@ void CTFSteamStats::FireGameEvent( IGameEvent *event )
 			gameeventmanager->FireEventClientSide( event );
 		}
 
-//		pStatPanel->SetStatsChanged( true );
-//		pStatPanel->UpdateStatSummaryPanel();
+		pStatPanel->SetStatsChanged( true );
+		pStatPanel->UpdateStatSummaryPanel();
 	}
 }
 

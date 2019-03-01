@@ -317,6 +317,8 @@ CTFHudTimeStatus::CTFHudTimeStatus( Panel *parent, const char *name ) : Editable
 		m_TimerDeltaItems[i].m_flDieTime = 0.0f;
 	}
 
+	m_pTimeValue = new CExLabel(this, "TimePanelValue", "");
+
 	ListenForGameEvent( "teamplay_update_timer" );
 	ListenForGameEvent( "teamplay_timer_time_added" );
 }
@@ -492,7 +494,6 @@ void CTFHudTimeStatus::ApplySchemeSettings( IScheme *pScheme )
 	// load control settings...
 	LoadControlSettings( "resource/UI/HudObjectiveTimePanel.res" );
 
-	m_pTimeValue = dynamic_cast<CExLabel *>( FindChildByName( "TimePanelValue" ) );
 	m_pProgressBar = dynamic_cast<CTFProgressBar *>( FindChildByName( "TimePanelProgressBar" ) );
 
 	m_pOvertimeLabel = dynamic_cast<CExLabel *>( FindChildByName( "OvertimeLabel" ) );

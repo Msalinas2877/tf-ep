@@ -15,7 +15,7 @@
 	supportsvr	1
 	FileSystem
 	{
-		SteamAppId		243750	// Source SDK Base 2013 Multiplayer
+		SteamAppId		440	// Source SDK Base 2013 Multiplayer
 
 		SearchPaths
 		{
@@ -28,17 +28,17 @@
 			game+mod			"|all_source_engine_paths|../Team Fortress 2/tf/custom/*"
 
 			// Search game's files after any user customizations. This is also where any writes should go.
-			game+game_write+mod+mod_write+default_write_path		|gameinfo_path|.
+			game+game_write+mod+mod_write+default_write_path		"|all_source_engine_paths|../Team Fortress 2/tf/."
 
 			// Where the game's binaries are.
 			gamebin				|gameinfo_path|bin
 
 			// Search shared VPK files.
-			game_lv				"|all_source_engine_paths|../Team Fortress 2/tf/tf2_lv.vpk"
-			game				"|all_source_engine_paths|../Team Fortress 2/tf/tf2_textures.vpk"
-			game				"|all_source_engine_paths|../Team Fortress 2/tf/tf2_sound_vo_english.vpk"
-			game				"|all_source_engine_paths|../Team Fortress 2/tf/tf2_sound_misc.vpk"
-			game				"|all_source_engine_paths|../Team Fortress 2/tf/tf2_misc.vpk"
+			game_lv				|all_source_engine_paths|tf/tf2_lv.vpk
+			game				|all_source_engine_paths|tf/tf2_textures.vpk
+			game				|all_source_engine_paths|tf/tf2_sound_vo_english.vpk
+			game				|all_source_engine_paths|tf/tf2_sound_misc.vpk
+			game				|all_source_engine_paths|tf/tf2_misc.vpk
 			game				|all_source_engine_paths|hl2/hl2_textures.vpk
 			game				|all_source_engine_paths|hl2/hl2_sound_vo_english.vpk
 			game				|all_source_engine_paths|hl2/hl2_sound_misc.vpk
@@ -46,7 +46,7 @@
 			platform+vgui			|all_source_engine_paths|platform/platform_misc.vpk
 
 			// Mount in shared loose files.
-			game				"|all_source_engine_paths|../Team Fortress 2/tf"
+			game				|all_source_engine_paths|tf
 			game				|all_source_engine_paths|hl2
 			platform			|all_source_engine_paths|platform
 

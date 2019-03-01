@@ -19,7 +19,7 @@ rmdir _UpgradeReport_Files /s/q
 del UpgradeLog*.*
 
 @rem Note that we no longer build separate debug libraries
-for /d %%d in ( "release|Win32" "release|x64") do (
+for /d %%d in ( "release|Win32" ) do (
 	@rem Note that this message seems to display out of order for some reason...
 	echo Building %%d
 	devenv protobuf_2010.sln /clean %%d

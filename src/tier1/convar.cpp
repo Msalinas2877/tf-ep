@@ -74,8 +74,11 @@ void ConVar_Register( int nCVarFlag, IConCommandBaseAccessor *pAccessor )
 	while ( pCur )
 	{
 		pNext = pCur->m_pNext;
-		pCur->AddFlags( s_nCVarFlag );
-		pCur->Init();
+		if( pCur != nullptr)
+		{
+			pCur->AddFlags( s_nCVarFlag );
+			pCur->Init();
+		}
 		pCur = pNext;
 	}
 
@@ -862,7 +865,7 @@ bool ConVar::ClampValue( float& value )
 // Purpose: 
 // Input  : *value - 
 //-----------------------------------------------------------------------------
-void ConVar::InternalSetFloatValue( float fNewValue )
+void ConVar::InternalSetFloatValue( float fNewValue, bool bForce /*= false */ )
 {
 	if ( fNewValue == m_fValue )
 		return;
@@ -962,6 +965,12 @@ void ConVar::Create( const char *pName, const char *pDefaultValue, int flags /*=
 	m_bHasMax = bMax;
 	m_fMaxVal = fMax;
 	
+	m_bHasCompMin = false;
+	m_fCompMinVal = 0.0;
+	m_bHasCompMax = false;
+	m_fCompMaxVal = 0.0;
+	m_bCompetitiveRestrictions = false;
+
 	m_fnChangeCallback = callback;
 
 	m_fValue = ( float )atof( m_pszString );

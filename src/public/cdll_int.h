@@ -556,6 +556,11 @@ public:
 abstract_class IVEngineClient : public IVEngineClient013
 {
 public:
+	virtual void GetPausedExpireTime() = 0;
+	virtual void StartDemoRecording() = 0;
+	virtual void StopDemoRecording() = 0;
+	virtual void TakeScreenshot() = 0;
+
 	virtual uint GetProtocolVersion() = 0;
 	virtual bool IsWindowedMode() = 0;
 

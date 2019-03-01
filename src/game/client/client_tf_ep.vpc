@@ -47,7 +47,34 @@ $Project "Client (TF)"
 		$File	"$SRCDIR\game\shared\teamplay_round_timer.h"
 		$File	"TeamBitmapImage.cpp"
 		$File	"voice_menu.cpp"
-
+		
+		$Folder	"ECON"
+		{
+			$File	"$SRCDIR\game\shared\econ\econ_holidays.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_holidays.h"
+			$File	"$SRCDIR\game\shared\econ\econ_item.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_item.h"
+			$File	"$SRCDIR\game\shared\econ\econ_item_constants.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_item_constants.h"
+			$File	"$SRCDIR\game\shared\econ\econ_item_schema.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_item_schema.h"
+			$File	"$SRCDIR\game\shared\econ\econ_item_system.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_item_system.h"
+			$File	"$SRCDIR\game\shared\econ\econ_wearable.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_wearable.h"
+			$File	"$SRCDIR\game\shared\econ\game_item_schema.cpp"
+			$File	"$SRCDIR\game\shared\econ\game_item_schema.h"
+		}
+		
+		$Folder "Protobuf"
+		{
+			$File	"$SRCDIR\game\shared\generated_proto\base_gcmessages.pb.cc"
+			$File	"$SRCDIR\game\shared\generated_proto\gcsdk_gcmessages.pb.cc"
+			$File	"$SRCDIR\game\shared\generated_proto\gcsystemmsgs.pb.cc"
+			$File	"$SRCDIR\game\shared\generated_proto\steammessages.pb.cc"
+			$File	"$SRCDIR\game\shared\generated_proto\tf_gcmessages.pb.cc"
+		}
+		
 		$Folder	"TF"
 		{
 			$File	"$SRCDIR\game\shared\tf\achievements_tf.cpp"
@@ -259,6 +286,10 @@ $Project "Client (TF)"
 			{
 				$File	"tf\vgui\backgroundpanel.cpp"
 				$File	"tf\vgui\backgroundpanel.h"
+				$File	"tf\vgui\character_info_panel.cpp"
+				$File	"tf\vgui\character_info_panel.h"
+				$File	"tf\vgui\charinfo_loadout_subpanel.cpp"
+				$File	"tf\vgui\charinfo_loadout_subpanel.h"
 				$File	"tf\vgui\ObjectControlPanel.cpp"
 				$File	"tf\vgui\ObjectControlPanel.h"
 				$File	"tf\vgui\tf_classmenu.cpp"
@@ -290,6 +321,7 @@ $Project "Client (TF)"
 				$File	"tf\vgui\vgui_rootpanel_tf.h"
 				$File	"tf\vgui\vgui_rotation_slider.cpp"
 				$File	"tf\vgui\vgui_rotation_slider.h"
+				$File	"mdlpanel.cpp"
 			}
 		}
 
@@ -308,9 +340,5 @@ $Project "Client (TF)"
 			$File	"$SRCDIR\game\shared\weapon_ifmbasecamera.h"
 			$File	"$SRCDIR\game\shared\weapon_ifmsteadycam.cpp"
 		}
-	}
-	$Folder	"Link Libraries"
-	{
-		$File	"$SRCDIR\extern\extern.lib"
 	}
 }

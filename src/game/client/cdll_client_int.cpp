@@ -124,6 +124,7 @@
 #include "sourcevr/isourcevirtualreality.h"
 #include "client_virtualreality.h"
 #include "mumble.h"
+#include "tf_gc_manager.h"
 
 // NVNT includes
 #include "hud_macros.h"
@@ -135,7 +136,7 @@
 #include "abuse_report.h"
 #endif
 
-#ifdef USES_ECON_ITEMS
+#if defined USES_ECON_ITEMS || TF_EP_CLIENT
 #include "econ_item_system.h"
 #endif // USES_ECON_ITEMS
 
@@ -874,6 +875,10 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory, CreateInterfaceFn physi
 	ConnectTier2Libraries( &appSystemFactory, 1 );
 	ConnectTier3Libraries( &appSystemFactory, 1 );
 
+#ifdef TF_EP_CLIENT
+	g_pVGuiLocalize->AddFile( "resource/tf_english.txt", "GAME" );
+#endif
+
 #ifndef NO_STEAM
 	ClientSteamContext().Activate();
 #endif
@@ -1157,8 +1162,9 @@ void CHLClient::PostInit()
 	}
 #endif
 #ifdef TF_EP_CLIENT
-	g_pVGuiLocalize->AddFile("resource/tf_english.txt", "GAME");
-	engine->ClientCmd("hud_reloadscheme");
+	//This should not be done here, the inventory manager should init the item system
+	//but theres still not code for it client side, so this is temporal
+	ItemSystem()->Init();
 #endif
 }
 

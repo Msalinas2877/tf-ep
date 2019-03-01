@@ -240,6 +240,8 @@ class CTFWeaponBase : public CBaseCombatWeapon
 	virtual int		GetSkin();
 	BobState_t		*GetBobState();
 
+	virtual bool AttachmentModelsShouldBeVisible() { return m_iState == 2; }
+
 	bool OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options );
 
 	// Model muzzleflashes

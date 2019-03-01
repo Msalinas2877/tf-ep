@@ -95,6 +95,9 @@ void CTFHudPlayerClass::ApplySchemeSettings( IScheme *pScheme )
 	// load control settings...
 	LoadControlSettings( "resource/UI/HudPlayerClass.res" );
 
+	if( Panel *pnl = FindChildByName("CarryingWeapon") )
+		pnl->MarkForDeletion();
+
 	m_nTeam = TEAM_UNASSIGNED;
 	m_nClass = TF_CLASS_UNDEFINED;
 	m_nDisguiseTeam = TEAM_UNASSIGNED;
@@ -322,6 +325,45 @@ void CTFHudPlayerHealth::ApplySchemeSettings( IScheme *pScheme )
 	// load control settings...
 	LoadControlSettings( GetResFilename() );
 
+	for (int i = 0; i < GetChildCount(); i++)
+	{
+		if ( Q_strncmp( GetChild(i)->GetName(), "PlayerStatus_", 13 ) == 0 )
+		{
+			GetChild(i)->MarkForDeletion();
+			continue;
+		}
+
+		if ( Q_strcmp( GetChild(i)->GetName(), "PlayerStatusSlowed" ) == 0 )
+		{
+			GetChild(i)->MarkForDeletion();
+			continue;
+		}
+
+		if ( Q_strcmp( GetChild(i)->GetName(), "PlayerStatusGasImage" ) == 0 )
+		{
+			GetChild(i)->MarkForDeletion();
+			continue;
+		}
+
+		if ( Q_strcmp( GetChild(i)->GetName(), "PlayerStatusMilkImage" ) == 0 )
+		{
+			GetChild(i)->MarkForDeletion();
+			continue;
+		}
+
+		if ( Q_strcmp( GetChild(i)->GetName(), "PlayerStatusHookBleedImage" ) == 0 )
+		{
+			GetChild(i)->MarkForDeletion();
+			continue;
+		}
+
+		if ( Q_strcmp( GetChild(i)->GetName(), "PlayerStatusBleedImage" ) == 0 )
+		{
+			GetChild(i)->MarkForDeletion();
+			continue;
+		}
+	}
+
 	if ( m_pHealthBonusImage )
 	{
 		m_pHealthBonusImage->GetBounds( m_nBonusHealthOrigX, m_nBonusHealthOrigY, m_nBonusHealthOrigW, m_nBonusHealthOrigH );
@@ -343,6 +385,8 @@ void CTFHudPlayerHealth::SetHealth( int iNewHealth, int iMaxHealth, int	iMaxBuff
 	m_nHealth = iNewHealth;
 	m_nMaxHealth = iMaxHealth;
 	m_pHealthImage->SetHealth( (float)(m_nHealth) / (float)(m_nMaxHealth) );
+
+	SetDialogVariable("MaxHealth", m_nMaxHealth);
 
 	if ( m_pHealthImage )
 	{

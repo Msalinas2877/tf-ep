@@ -37,11 +37,13 @@ public:
 	virtual int			ParmCount() const = 0;
 	virtual int			FindParm( const char *psz ) const = 0;	// Returns 0 if not found.
 	virtual const char* GetParm( int nIndex ) const = 0;
-	
+
 	// copies the string passwed
 	virtual void SetParm( int nIndex, char const *pNewParm ) =0;
 
 	virtual const char *ParmValueByIndex( int nIndex, const char *pDefaultVal = 0 ) const = 0;
+
+	virtual bool		HasParm( const char *parm ) = 0;
 };
 
 //-----------------------------------------------------------------------------

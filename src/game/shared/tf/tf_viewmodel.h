@@ -80,6 +80,7 @@ public:
 	virtual void StandardBlendingRules( CStudioHdr *pStudioHdr, Vector pos[], Quaternion q[], float currentTime, int boneMask );
 	virtual void FormatViewModelAttachment( int nAttachment, matrix3x4_t &attachmentToWorld );
 	virtual int GetSkin( void );
+	virtual RenderGroup_t GetRenderGroup() { return RENDER_GROUP_VIEW_MODEL_OPAQUE; }
 
 };
 #endif

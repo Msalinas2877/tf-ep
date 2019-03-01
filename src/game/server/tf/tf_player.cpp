@@ -49,29 +49,14 @@
 #include "steam/steam_api.h"
 #include "cdll_int.h"
 #include "tf_weaponbase.h"
-#include "init_factory.h"
+
+
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-class CInventoryManager : public CAutoGameSystemPerFrame
-{
-public:
-CInventoryManager( char const *name ) : CAutoGameSystemPerFrame( name )
-{
-}
-
-virtual bool Init() 
-{
-	factorylist_t factories;
-	FactoryList_Retrieve( factories );
-	ItemSystem()->Init( &factories.engineFactory );
-	return true;
-}
-};
-
-static CInventoryManager g_InventoryManager( "CInventoryManager" );
-
+static CInventoryManager s_InventoryManager( "CInventoryManager" );
+CInventoryManager* g_InventoryManager = &s_InventoryManager;
 CON_COMMAND_F( give_item, "", FCVAR_NONE )
 {
 	CTFPlayer *pPlayer = ToTFPlayer(UTIL_GetCommandClient());
@@ -1129,23 +1114,28 @@ void CTFPlayer::ManageBuilderWeapons( TFPlayerClassData_t *pData )
 //-----------------------------------------------------------------------------
 void CTFPlayer::ManageRegularWeapons( TFPlayerClassData_t *pData )
 {
+	unsigned short index = g_InventoryManager->m_Player.Find( GetSteamIDAsUInt64() );
+	if (index == g_InventoryManager->m_Player.InvalidIndex())
+		return;
+
 	for ( int iWeapon = 0; iWeapon < TF_PLAYER_WEAPON_COUNT; ++iWeapon )
 	{
 		if ( pData->m_aWeapons[iWeapon] != TF_WEAPON_NONE )
 		{
-			int iWeaponID = pData->m_aWeapons[iWeapon];
-			const char *pszWeaponName = WeaponIdToClassname( iWeaponID );
+
+			CEconItemView item;
+			item.Init(g_InventoryManager->m_Player[index].playerclass[GetDesiredPlayerClassIndex()].ItemIndex[iWeapon]);
+			if (!item.GetItemDefinition())
+				continue;
 
 			CTFWeaponBase *pWeapon = (CTFWeaponBase *)GetWeapon( iWeapon );
 
 			//If we already have a weapon in this slot but is not the same type then nuke it (changed classes)
-			if ( pWeapon && pWeapon->GetWeaponID() != iWeaponID )
+			if ( pWeapon && pWeapon->m_Item.GetID() != item.GetID() )
 			{
 				Weapon_Detach( pWeapon );
 				UTIL_Remove( pWeapon );
 			}
-
-			pWeapon = (CTFWeaponBase *)Weapon_OwnsThisID( iWeaponID );
 
 			if ( pWeapon )
 			{
@@ -1159,9 +1149,8 @@ void CTFPlayer::ManageRegularWeapons( TFPlayerClassData_t *pData )
 			}
 			else
 			{
-				CEconItemView item;
-				item.Init( iWeaponID - 1 );
-				pWeapon = (CTFWeaponBase *)GiveNamedItem( pszWeaponName, 0, &item, 0 );
+
+				pWeapon = (CTFWeaponBase *)GiveNamedItem( item.GetItemDefinition()->m_szItemClass, 0, &item, 0 );
 				if ( pWeapon )
 				{
 					pWeapon->DefaultTouch( this );
@@ -1981,7 +1970,7 @@ bool CTFPlayer::ClientCommand( const CCommand &args )
 
 		return true;
 	}
-	else if ( FStrEq( pcmd, "taunt" ) )
+	else if ( FStrEq( pcmd, "+taunt" ) )
 	{
 		Taunt();
 		return true;
